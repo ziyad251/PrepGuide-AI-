@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: import.meta.env.VITE_API_URL || "http://localhost:3000",
     withCredentials: true,
 })
 
@@ -55,5 +55,13 @@ export const generateResumePdf = async ({ interviewReportId }) => {
         responseType: "blob"
     })
 
+    return response.data
+}
+
+/**
+ * @description Delete an interview report by id.
+ */
+export const deleteInterviewReport = async (interviewId) => {
+    const response = await api.delete(`/api/interview/${interviewId}`)
     return response.data
 }

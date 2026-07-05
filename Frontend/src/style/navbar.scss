@@ -1,0 +1,150 @@
+$bg: #0d1117;
+$border: #2a3348;
+$text: #e6edf3;
+$muted: #7d8590;
+$accent: #ff2d78;
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13, 17, 23, 0.95);
+    border-bottom: 1px solid $border;
+    backdrop-filter: blur(8px);
+
+    &__inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0.85rem 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    &__logo {
+        font-weight: 700;
+        font-size: 1.15rem;
+        color: $text;
+        text-decoration: none;
+    }
+
+    &__links {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+
+        a {
+            color: $muted;
+            text-decoration: none;
+            font-size: 0.9rem;
+
+            &:hover {
+                color: $text;
+            }
+        }
+    }
+
+    &__cta {
+        padding: 0.45rem 0.9rem;
+        border-radius: 0.4rem;
+        background: linear-gradient(135deg, $accent, darken($accent, 12%));
+        color: #fff !important;
+    }
+
+    &__avatar-wrap {
+        position: relative;
+    }
+
+    &__avatar {
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 50%;
+        border: 1px solid $border;
+        background: #1c2230;
+        color: $text;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    &__dropdown {
+        position: absolute;
+        right: 0;
+        top: calc(100% + 0.5rem);
+        min-width: 160px;
+        background: #161b22;
+        border: 1px solid $border;
+        border-radius: 0.5rem;
+        padding: 0.35rem;
+        display: flex;
+        flex-direction: column;
+
+        a,
+        button {
+            text-align: left;
+            padding: 0.55rem 0.75rem;
+            color: $text;
+            text-decoration: none;
+            background: none;
+            border: none;
+            font: inherit;
+            cursor: pointer;
+            border-radius: 0.35rem;
+
+            &:hover {
+                background: #1c2230;
+            }
+        }
+    }
+
+    &__menu-btn {
+        display: none;
+        background: none;
+        border: 1px solid $border;
+        color: $text;
+        padding: 0.35rem 0.6rem;
+        border-radius: 0.35rem;
+        cursor: pointer;
+    }
+
+    &__mobile {
+        display: none;
+        flex-direction: column;
+        padding: 0 1.5rem 1rem;
+        gap: 0.75rem;
+
+        a,
+        button {
+            color: $text;
+            text-decoration: none;
+            background: none;
+            border: none;
+            font: inherit;
+            text-align: left;
+            cursor: pointer;
+        }
+    }
+
+    @media (max-width: 768px) {
+        &__links {
+            display: none;
+        }
+
+        &__menu-btn {
+            display: block;
+        }
+
+        &__mobile {
+            display: flex;
+        }
+    }
+}
+
+.app-layout {
+    min-height: 100vh;
+    background: #0d1117;
+
+    &__main {
+        min-height: calc(100vh - 60px);
+    }
+}

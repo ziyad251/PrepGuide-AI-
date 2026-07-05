@@ -10,7 +10,7 @@ const interviewReportModel = require("../models/interviewReport.model")
  */
 async function generateInterViewReportController(req, res) {
 
-    const resumeContent = await (new pdfParse.PDFParse(Uint8Array.from(req.file.buffer))).getText()
+    const resumeContent = await new pdfParse.PDFParse({ data: req.file.buffer }).getText()
     const { selfDescription, jobDescription } = req.body
 
     const interViewReportByAi = await generateInterviewReport({
@@ -95,4 +95,32 @@ async function generateResumePdfController(req, res) {
     res.send(pdfBuffer)
 }
 
-module.exports = { generateInterViewReportController, getInterviewReportByIdController, getAllInterviewReportsController, generateResumePdfController }
+/**
+ * @description Delete an interview report owned by the current user.
+ */
+async function deleteInterviewReportController(req, res) {
+    const { interviewId } = req.params
+
+    const interviewReport = await interviewReportModel.findOneAndDelete({
+        _id: interviewId,
+        user: req.user.id,
+    })
+
+    if (!interviewReport) {
+        return res.status(404).json({
+            message: "Interview report not found.",
+        })
+    }
+
+    res.status(200).json({
+        message: "Interview report deleted successfully.",
+    })
+}
+
+module.exports = {
+    generateInterViewReportController,
+    getInterviewReportByIdController,
+    getAllInterviewReportsController,
+    generateResumePdfController,
+    deleteInterviewReportController,
+}

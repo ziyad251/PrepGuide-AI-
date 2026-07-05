@@ -3,9 +3,19 @@ const { z } = require("zod")
 const { zodToJsonSchema } = require("zod-to-json-schema")
 const puppeteer = require("puppeteer")
 
-const ai = new GoogleGenAI({
-    apiKey: process.env.GOOGLE_GENAI_API_KEY
-})
+let ai
+
+function getAiClient() {
+    if (!process.env.GOOGLE_GENAI_API_KEY) {
+        throw new Error("GOOGLE_GENAI_API_KEY is not set in environment variables")
+    }
+    if (!ai) {
+        ai = new GoogleGenAI({
+            apiKey: process.env.GOOGLE_GENAI_API_KEY
+        })
+    }
+    return ai
+}
 
 
 const interviewReportSchema = z.object({
@@ -41,7 +51,7 @@ async function generateInterviewReport({ resume, selfDescription, jobDescription
                         Job Description: ${jobDescription}
 `
 
-    const response = await ai.models.generateContent({
+    const response = await getAiClient().models.generateContent({
         model: "gemini-3-flash-preview",
         contents: prompt,
         config: {
@@ -54,9 +64,6 @@ async function generateInterviewReport({ resume, selfDescription, jobDescription
 
 
 }
-
-
-
 async function generatePdfFromHtml(htmlContent) {
     const browser = await puppeteer.launch()
     const page = await browser.newPage();
@@ -95,7 +102,7 @@ async function generateResumePdf({ resume, selfDescription, jobDescription }) {
                         The resume should not be so lengthy, it should ideally be 1-2 pages long when converted to PDF. Focus on quality rather than quantity and make sure to include all the relevant information that can increase the candidate's chances of getting an interview call for the given job description.
                     `
 
-    const response = await ai.models.generateContent({
+    const response = await getAiClient().models.generateContent({
         model: "gemini-3-flash-preview",
         contents: prompt,
         config: {

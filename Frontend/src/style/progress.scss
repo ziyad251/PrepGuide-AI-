@@ -1,0 +1,77 @@
+.generation-progress {
+    min-height: calc(100vh - 60px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+
+    &__card {
+        max-width: 480px;
+        width: 100%;
+        background: #161b22;
+        border: 1px solid #2a3348;
+        border-radius: 1rem;
+        padding: 2rem;
+        text-align: center;
+
+        h1 {
+            font-size: 1.35rem;
+            margin: 1rem 0 1.5rem;
+        }
+
+        ul {
+            list-style: none;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+
+        li {
+            color: #7d8590;
+            padding-left: 1.5rem;
+            position: relative;
+
+            &::before {
+                content: "○";
+                position: absolute;
+                left: 0;
+            }
+        }
+    }
+
+    &__spinner {
+        width: 48px;
+        height: 48px;
+        margin: 0 auto;
+        border: 3px solid #2a3348;
+        border-top-color: #ff2d78;
+        border-radius: 50%;
+        animation: spin 0.9s linear infinite;
+    }
+
+    &__step--active {
+        color: #e6edf3 !important;
+        font-weight: 600;
+
+        &::before {
+            content: "◉";
+            color: #ff2d78;
+        }
+    }
+
+    &__step--done {
+        color: #3fb950 !important;
+
+        &::before {
+            content: "✓";
+            color: #3fb950;
+        }
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
