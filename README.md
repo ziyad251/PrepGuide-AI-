@@ -41,7 +41,7 @@ PrepGuide-AI/
 Clone the repository:
 
 ```bash
-git clone https://github.com/ziyad251/PrepGuide-AI-.git
+git clone https://github.com/ziyad251/PrepGuide-AI.git
 ```
 
 For setup and execution instructions, refer to **RUN_PROJECT.md**.
